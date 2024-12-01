@@ -1,0 +1,19 @@
+name: Monitor File Changes
+
+on:
+  push:
+    paths:
+      - "mydata.txt"  # Monitors changes to this file
+
+jobs:
+  file-change-monitor:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Check File Changes
+      run: |
+        echo "Checking for changes in mydata.txt"
+        git diff --name-only HEAD^ HEAD | grep "mydata.txt" && echo "mydata.txt has changed" || echo "No changes detected"
